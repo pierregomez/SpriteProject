@@ -17,8 +17,11 @@ public class SpriteDemo extends JPanel {
 	private Image waterSprite;
 	private Image grassSprite;
 	private Image treeSprite;
-	private Image fireSprite;
-	private int spriteLength = 64;
+	private Image fire1Sprite;
+	private Image fire2Sprite;
+	private Image fire3Sprite;
+	private Image fire4Sprite;
+	private int spriteLength = 32;
 	private World world = new World(64,64);
 	public SpriteDemo()
 	{
@@ -27,7 +30,10 @@ public class SpriteDemo extends JPanel {
 			waterSprite = ImageIO.read(new File("src/water.png"));
 			treeSprite = ImageIO.read(new File("src/tree.png"));
 			grassSprite = ImageIO.read(new File("src/grass.png"));
-			fireSprite = ImageIO.read(new File("src/fire.png"));
+			fire1Sprite = ImageIO.read(new File("src/fire1.png"));
+			fire2Sprite = ImageIO.read(new File("src/fire2.png"));
+			fire3Sprite = ImageIO.read(new File("src/fire3.png"));
+			fire4Sprite = ImageIO.read(new File("src/fire4.png"));
 		}
 		catch(Exception e)
 		{
@@ -59,7 +65,17 @@ public class SpriteDemo extends JPanel {
 					g2.drawImage(treeSprite,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
 					break;
 				case 3 :
-					g2.drawImage(fireSprite,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
+					g2.drawImage(fire1Sprite,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
+					break;
+				case 4 :
+					g2.drawImage(fire2Sprite,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
+					break;
+				case 5 :
+					g2.drawImage(fire3Sprite,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
+					break;
+				case 6 :
+					g2.drawImage(fire4Sprite,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
+					break;
 				}
 			}
 	}
