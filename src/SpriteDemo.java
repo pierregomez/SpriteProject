@@ -22,7 +22,8 @@ public class SpriteDemo extends JPanel {
 	private Image fire3Sprite;
 	private Image fire4Sprite;
 	private int spriteLength = 32;
-	private World world = new World(64,64);
+	public static final int SIZE=20;
+	private World world = new World(SIZE,SIZE);
 	public SpriteDemo()
 	{
 		try
@@ -43,7 +44,7 @@ public class SpriteDemo extends JPanel {
 
 		frame = new JFrame("World of Sprite");
 		frame.add(this);
-		frame.setSize(900,900);
+		frame.setSize(1000,1000);
 		frame.setVisible(true);
 		
 	}
@@ -51,8 +52,8 @@ public class SpriteDemo extends JPanel {
 	public void paint(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D)g;
-		for ( int i = 0 ; i < world.getDx() ; i++ )
-			for ( int j = 0 ; j < world.getDy() ; j++ )
+		for ( int i = 0 ; i < world.DX ; i++ )
+			for ( int j = 0 ; j < world.DY ; j++ )
 			{
 				switch (world.getTerrain()[i][j]){
 				case 0 :
@@ -82,7 +83,7 @@ public class SpriteDemo extends JPanel {
 	
 	private void step(){
 		repaint();
-		world.step();
+		world.update();
 	}
 
 	public static void main(String[] args) {
