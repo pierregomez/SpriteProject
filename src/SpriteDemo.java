@@ -22,7 +22,7 @@ public class SpriteDemo extends JPanel {
 	private Image fire3Sprite;
 	private Image fire4Sprite;
 	private int spriteLength = 32;
-	public static final int SIZE=20;
+	public static final int SIZE=40;
 	private World world = new World(SIZE,SIZE);
 	public SpriteDemo()
 	{
@@ -55,7 +55,7 @@ public class SpriteDemo extends JPanel {
 		for ( int i = 0 ; i < world.DX ; i++ )
 			for ( int j = 0 ; j < world.DY ; j++ )
 			{
-				switch (world.getTerrain()[i][j]){
+				switch (world.getTerrain()[0][i][j]){
 				case 0 :
 					g2.drawImage(waterSprite,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
 					break;
@@ -91,6 +91,9 @@ public class SpriteDemo extends JPanel {
 		SpriteDemo launch = new SpriteDemo();
 		for(int i=0 ; i<10000; i++){
 			launch.step();
+			try {
+				Thread.sleep(400);
+			} catch (InterruptedException e){}
 		}
 		
 	}
