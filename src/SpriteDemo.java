@@ -31,10 +31,10 @@ public class SpriteDemo extends JPanel {
 			waterSprite = ImageIO.read(new File("src/water.png"));
 			treeSprite = ImageIO.read(new File("src/tree.png"));
 			grassSprite = ImageIO.read(new File("src/grass.png"));
-			fire1Sprite = ImageIO.read(new File("src/fire1.png"));
-			fire2Sprite = ImageIO.read(new File("src/fire2.png"));
-			fire3Sprite = ImageIO.read(new File("src/fire3.png"));
-			fire4Sprite = ImageIO.read(new File("src/fire4.png"));
+			fire1Sprite = ImageIO.read(new File("src/fire11.png"));
+			fire2Sprite = ImageIO.read(new File("src/fire21.png"));
+			fire3Sprite = ImageIO.read(new File("src/fire31.png"));
+			fire4Sprite = ImageIO.read(new File("src/fire41.png"));
 		}
 		catch(Exception e)
 		{
