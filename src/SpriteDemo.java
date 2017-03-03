@@ -21,20 +21,28 @@ public class SpriteDemo extends JPanel {
 	private Image fire2Sprite;
 	private Image fire3Sprite;
 	private Image fire4Sprite;
+	private Image ashesSprite;
+	private Image foxSprite;
+	private Image chickenSprite;
+	private Image snakeSprite;
 	private int spriteLength = 32;
-	public static final int SIZE=40;
+	public static final int SIZE=30;
 	private World world = new World(SIZE,SIZE);
 	public SpriteDemo()
 	{
 		try
 		{
-			waterSprite = ImageIO.read(new File("src/water.png"));
-			treeSprite = ImageIO.read(new File("src/tree.png"));
+			waterSprite = ImageIO.read(new File("src/water1.png"));
+			treeSprite = ImageIO.read(new File("src/tree1.png"));
 			grassSprite = ImageIO.read(new File("src/grass.png"));
 			fire1Sprite = ImageIO.read(new File("src/fire11.png"));
 			fire2Sprite = ImageIO.read(new File("src/fire21.png"));
 			fire3Sprite = ImageIO.read(new File("src/fire31.png"));
 			fire4Sprite = ImageIO.read(new File("src/fire41.png"));
+			ashesSprite = ImageIO.read(new File("src/ashes1.png"));
+			foxSprite = ImageIO.read(new File("src/fox.png"));
+			chickenSprite = ImageIO.read(new File("src/chicken.png"));
+			snakeSprite = ImageIO.read(new File("src/snake.png"));
 		}
 		catch(Exception e)
 		{
@@ -44,7 +52,7 @@ public class SpriteDemo extends JPanel {
 
 		frame = new JFrame("World of Sprite");
 		frame.add(this);
-		frame.setSize(1000,1000);
+		frame.setSize(960,960);
 		frame.setVisible(true);
 		
 	}
@@ -77,8 +85,20 @@ public class SpriteDemo extends JPanel {
 				case 6 :
 					g2.drawImage(fire4Sprite,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
 					break;
+				case 7 :
+					g2.drawImage(ashesSprite,spriteLength*i,spriteLength*j,spriteLength,spriteLength, frame);
+					break;
 				}
 			}
+		for(Agent a : world.getAgents()){
+			if(a.getType()=="poule")
+				g2.drawImage(chickenSprite,spriteLength*a.getX(),spriteLength*a.getY(),spriteLength,spriteLength, frame);
+			else if(a.getType()=="renard")
+				g2.drawImage(foxSprite,spriteLength*a.getX(),spriteLength*a.getY(),spriteLength,spriteLength, frame);
+			else
+				if(a.getType()=="vipere")
+					g2.drawImage(snakeSprite,spriteLength*a.getX(),spriteLength*a.getY(),spriteLength,spriteLength, frame);
+		}
 	}
 	
 	private void step(){
@@ -92,7 +112,7 @@ public class SpriteDemo extends JPanel {
 		for(int i=0 ; i<10000; i++){
 			launch.step();
 			try {
-				Thread.sleep(400);
+				Thread.sleep(500);
 			} catch (InterruptedException e){}
 		}
 		

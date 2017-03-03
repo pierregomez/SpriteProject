@@ -6,28 +6,47 @@ public class World {
 	private int [][][] nouveauTerrain; //tampon
 	public final int DX,DY;
 	private ArrayList<Agent> agents;
-	double densite = 0.55; //0.55; // seuil de percolation à 0.55
-	double population = 0.33;
+	double densite = 0.25; // plus faible en Moore
+	double population = 50;
 	private double pi;	// proba d'incendie spontane
-	private double pr1;	// proba de repousse sur herbe
+	private double pr1;	// proba de pousse sur herbe
+	private double pr2;	// proba de repousse sur cendres
 	
 	public World(int dx, int dy){
 		DX=dx;
 		DY=dy;
 		pi=0.0001/DX;
 		pr1=0.002/DX;
+		pr2=0.1/DX;
 		agents = new ArrayList<Agent>();
 		terrain= new int[2][dx][dy];
 		nouveauTerrain= new int[2][dx][dy];
 			for(int x=0; x<dx ; x++)
 				for(int y=0 ; y<dy ; y++){
-					terrain[0][x][y]=(int)(Math.random()*2+1); //(0 eau) 1 herbe 2 arbre
+					if (Math.random()<densite)
+						terrain[0][x][y]=2; // arbre
+					else if(Math.random()>0.20)
+						terrain[0][x][y]=1; // herbe
+					else terrain[0][x][y]=0; //eau
 				}
 		terrain[0][DX/2][DY/2]=3; //burning tree
+		
+		for(int i=0; i!= population; i++){
+			if(Math.random()<0.33)
+				agents.add(new Poule((int)(Math.random()*DX),(int)(Math.random()*DY)));
+			else if(Math.random()<0.66)
+				agents.add(new Renard((int)(Math.random()*DX),(int)(Math.random()*DY)));
+			else
+				agents.add(new Vipere((int)(Math.random()*DX),(int)(Math.random()*DY)));
+		}
 	}
 	
 	public int[][][] getTerrain(){
 		return terrain;
+	}
+	
+	public ArrayList<Agent> getAgents(){
+		return agents;
 	}
 	
 	public Agent getAgentLePlusProche(Agent requete){
@@ -51,28 +70,35 @@ public class World {
 			{
 				if (terrain[0][x][y]==1){ //herbe
 					nouveauTerrain[0][x][y]=1;
-					if (Math.random()<pr1) //repousse spontanée
+					if (Math.random()<pr1)		 //repousses spontanées
 						nouveauTerrain[0][x][y]=2;
 				}
+				if (terrain[0][x][y]==7){ //cendres
+					nouveauTerrain[0][x][y]=7;
+					if (Math.random()<pr2)		 //repousses spontanées
+						nouveauTerrain[0][x][y]=2;
+				} 
 				if (terrain[0][x][y]==2){ //arbre
 					nouveauTerrain[0][x][y]=2;
-					if (terrain[0][(x-1+DX)%DX][y]==3 || terrain[0][(x+1+DX)%DX][y]==3 ||
-						terrain[0][x][(y-1+DY)%DY]==3 || terrain[0][x][(y+1+DY)%DY]==3 ||
-						terrain[0][(x-1+DX)%DX][y]==4 || terrain[0][(x+1+DX)%DX][y]==4 || 	//		propagation du feu
-						terrain[0][x][(y-1+DY)%DY]==4 || terrain[0][x][(y+1+DY)%DY]==4 ||
-						terrain[0][(x-1+DX)%DX][y]==5 || terrain[0][(x+1+DX)%DX][y]==5 ||
-						terrain[0][x][(y-1+DY)%DY]==5 || terrain[0][x][(y+1+DY)%DY]==5){
-							nouveauTerrain[0][x][y]=3;
-					}
-					if(Math.random()<pi) //incendie spontané
-						nouveauTerrain[0][x][y]=2;
+					for(int i=x-1 ; i<=x+1; i++)
+						for(int j=y-1;j<=y+1;j++){					//	propagation du feu, voisingage : MOORE
+							if(x==i && y==j) continue;
+							if(	terrain[0][(i+DX)%DX][(j+DY)%DY]==3 || terrain[0][(i+DX)%DX][(j+DY)%DY]==4 ||
+								terrain[0][(i+DX)%DX][(j+DY)%DY]==5)
+								nouveauTerrain[0][x][y]=3;
+						}
 				}
-				if(terrain[0][x][y]==3)
+					if(Math.random()<pi) //incendie spontané
+						nouveauTerrain[0][x][y]=3;
+
+				if(terrain[0][x][y]==3)			//evolution du de l'arbre en feu
 					nouveauTerrain[0][x][y]=4;
 				if(terrain[0][x][y]==4)
 					nouveauTerrain[0][x][y]=5;
 				if(terrain[0][x][y]==5)
 					nouveauTerrain[0][x][y]=6;
+				if(terrain[0][x][y]==6)
+					nouveauTerrain[0][x][y]=7;
 			}
 		
 		// 2 - met a jour le Terrain affichable
@@ -80,6 +106,10 @@ public class World {
 		for ( int x = 0 ; x != terrain[0].length ; x++ )
 			for ( int y = 0 ; y != terrain[0][0].length ; y++ )
 				terrain[0][x][y] = nouveauTerrain[0][x][y];
+			
+		for(Agent a : agents){
+			a.move(getAgentLePlusProche(a));
+		}
 	}
 	
 	
