@@ -91,13 +91,15 @@ public class SpriteDemo extends JPanel {
 				}
 			}
 		for(Agent a : world.getAgents()){
-			if(a.getType()=="poule")
-				g2.drawImage(chickenSprite,spriteLength*a.getX(),spriteLength*a.getY(),spriteLength,spriteLength, frame);
-			else if(a.getType()=="renard")
-				g2.drawImage(foxSprite,spriteLength*a.getX(),spriteLength*a.getY(),spriteLength,spriteLength, frame);
-			else
-				if(a.getType()=="vipere")
-					g2.drawImage(snakeSprite,spriteLength*a.getX(),spriteLength*a.getY(),spriteLength,spriteLength, frame);
+			if(a.isAlive()){
+				if(a.getType()=="poule")
+					g2.drawImage(chickenSprite,spriteLength*a.getX(),spriteLength*a.getY(),spriteLength,spriteLength, frame);
+				else if(a.getType()=="renard")
+					g2.drawImage(foxSprite,spriteLength*a.getX(),spriteLength*a.getY(),spriteLength,spriteLength, frame);
+				else
+					if(a.getType()=="vipere")
+						g2.drawImage(snakeSprite,spriteLength*a.getX(),spriteLength*a.getY(),spriteLength,spriteLength, frame);
+			}
 		}
 	}
 	

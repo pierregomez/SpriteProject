@@ -8,10 +8,10 @@ public class Renard extends Agent {
 
 	@Override
 	public void move(Agent a) {
-		if(a.getType()=="poule")
+		if(a.getType()=="vipere")
 			this.move((int) Math.signum(getX() - a.getX()), (int) Math.signum(getY() - a.getY()));
 		
-		if(a.getType()=="vipere")
+		if(a.getType()=="poule")
 			this.move((int) Math.signum(-getX() + a.getX()), (int) Math.signum(-getY() + a.getY()));
 
 	}

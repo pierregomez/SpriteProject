@@ -8,10 +8,10 @@ public class Vipere extends Agent {
 
 	@Override
 	public void move(Agent a) {
-		if(a.getType()=="renard")
+		if(a.getType()=="poule")
 			this.move((int) Math.signum(getX() - a.getX()), (int) Math.signum(getY() - a.getY()));
 
-		if(a.getType()=="poule")
+		if(a.getType()=="renard")
 			this.move((int) Math.signum(-getX() + a.getX()), (int) Math.signum(-getY() + a.getY()));
 
 	}

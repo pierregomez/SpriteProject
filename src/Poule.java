@@ -8,13 +8,12 @@ public class Poule extends Agent {
 
 	@Override
 	public void move(Agent a) {
-		if(a.getType()=="vipere")
+		if(a.getType()=="renard")
 			this.move((int) Math.signum(getX() - a.getX()), (int) Math.signum(getY() - a.getY()));
 		
-		if(a.getType()=="renard")
+		if(a.getType()=="vipere")
 			this.move((int) Math.signum(-getX() + a.getX()), (int) Math.signum(-getY() + a.getY()));
-		
 
 	}
-
+	
 }

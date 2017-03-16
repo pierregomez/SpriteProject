@@ -63,6 +63,15 @@ public class World {
 		return closest;
 	}
 	
+	public void eat(Agent a){
+		for(Agent b : agents){
+			if(b.isAlive() && a.getX()==b.getX() && a.getY()==b.getY()){
+				if(a.getType()=="poule" && b.getType()=="renard") a.die();
+				if(a.getType()=="poule" && b.getType()=="vipere") b.die();
+				if(a.getType()=="renard" && b.getType()=="vipere") a.die();
+			}
+		}
+	}
 	public void update(){
 		// 1 - mise a jour de l'automate (dans le Terrain en tampon)
 		for ( int x = 0 ; x != terrain[0].length ; x++ )
@@ -108,7 +117,9 @@ public class World {
 				terrain[0][x][y] = nouveauTerrain[0][x][y];
 			
 		for(Agent a : agents){
+			eat(a);						//manger la proie s'ils sont sur la meme case 
 			a.move(getAgentLePlusProche(a));
+			eat(a);
 		}
 	}
 	

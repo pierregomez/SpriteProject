@@ -25,6 +25,10 @@ public abstract class Agent {
 		return type;
 	}
 	
+	public void die(){
+		isAlive=false;
+	}
+	
 	public double distance(Agent a){
 		return Math.sqrt((a.x-this.x)*(a.x-this.x)+(a.y-this.y)*(a.y-this.y));
 	}
